@@ -1,0 +1,11 @@
+# Ignore this line and the next one.
+
+# Print ranges that would cause a left-left rotation
+print left-left
+
+# Print ranges that would cause a right-left rotation
+print right-left
+
+print left-right
+
+print right-right
