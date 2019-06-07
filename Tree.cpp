@@ -51,7 +51,6 @@ node *Tree::ll_rotate(node *parent){
     Left Right Rotate
 */
 node *Tree::lr_rotate(node *parent){
-    // rotationCount++;
     node *temp;
     temp = parent->left;
     parent->left = rr_rotate(temp);
@@ -62,13 +61,15 @@ node *Tree::lr_rotate(node *parent){
     Right Left Rotate
 */
 node *Tree::rl_rotate(node *parent){
-    // rotationCount++;
     node *temp;
     temp = parent->right;
     parent->right = ll_rotate(temp);
     return rr_rotate(parent);
 }
 
+/*
+    Balance
+*/
 node *Tree::balance(node *temp){
     int balance_factor = diff(temp);
     if(balance_factor > 1){
@@ -86,12 +87,19 @@ node *Tree::balance(node *temp){
     return temp;
 }
 
+
+/*
+    Insert
+*/
 bool Tree::insert(int value) {
     int cache = insertCount;
     root = insert(root, value);
     return cache != insertCount;
 }
 
+/*
+    Insert helper
+*/
 node *Tree::insert(node *root, int value){
     if(root == NULL){
         insertCount++;
@@ -101,25 +109,32 @@ node *Tree::insert(node *root, int value){
         root->right = NULL;
         return root;
     }
-
     visitCount++;
+
     if(value < root->data){
         root->left = insert(root->left, value);
         root = balance(root);
     }
+
     else if(value > root->data){
         root->right = insert(root->right, value);
         root = balance(root);
     }
+
     return root;
 }
 
+/*
+    print
+*/
 void Tree::print(){
     print(root, 0);
 }
 
+/*
+    print helper
+*/
 void Tree::print(node* node, int depth) {
-    // indent
     string indent="";
     for(int i = 0; i < depth; i++){
         indent += "  ";
@@ -137,18 +152,25 @@ void Tree::print(node* node, int depth) {
     }
 }
 
+/*
+    rotation prints
+*/
 void Tree::printRotation(){
     int min = -2147483648;
     int max = 2147483647;
     rotationPrintHelper(min, max, root, 0, 0);
-
-
-
 }
 
+/*
+    rotation print helper 
+*/
 void Tree::rotationPrintHelper(int min, int max, node*temp, int flag1, int flag2){
     //flag1: left = -1 right = 1 unset = 0;
     //flag2: equal path on left= -1; equal path on right = 1; unset = 0;
+    /*
+    FLAG 1: step 1 of finding the heavy path of tree 
+    FLAG 2: step 2 of finding the heavy child, once reaching a balance node, flag 2 tells which direction we go
+    */
     if(temp == NULL){
         return;
     }
@@ -210,12 +232,25 @@ void Tree::rotationPrintHelper(int min, int max, node*temp, int flag1, int flag2
 
 }
 
+
+/*
+    Range Check
+    -to find if the min and max range are valid ie for a tree like 
+            2
+           / \
+          1   4
+             /
+            3
+*/
 void Tree::rangeChecker(vector<pair<int, int> >& v, int min, int max){
     if (min <= max){
         v.push_back(pair<int, int> (min, max));
     }
 }
 
+/*
+    Look up
+*/
 bool Tree::lookup(int key){
     if(root == NULL){
         return false;
@@ -233,17 +268,29 @@ bool Tree::lookup(int key){
     }
     return false;
 }
-void Tree:: deconstructHelper(node *temp){
+
+/*
+    destructor helper
+*/
+void Tree:: destructHelper(node *temp){
     if(temp != NULL){
-        deconstructHelper(temp->left);
-        deconstructHelper(temp->right);
+        destructHelper(temp->left);
+        destructHelper(temp->right);
         delete temp;
     }
 }
+
+/*
+    destructor
+*/
 Tree::~Tree(){
-    deconstructHelper(root);
+    destructHelper(root);
     root = NULL;
 }
+
+/*
+    getter methods
+*/
 int Tree::getVisit(){
     return visitCount;
 }
@@ -269,6 +316,10 @@ vector<pair<int, int> > Tree::get_rlPair(){
 vector<pair<int, int> > Tree::get_rrPair(){
     return rr;
 }
+
+/*
+    reset statistics
+*/
 void Tree::reset(){
     visitCount = 0; 
     rotationCount = 0; 

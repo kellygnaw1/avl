@@ -15,9 +15,9 @@ struct node{
 class Tree
 {
 	node* root;
-	int visitCount;
-	int rotationCount;
 	int insertCount;
+	int rotationCount;
+	int visitCount;
 	vector<pair<int, int> > ll;
 	vector<pair<int, int> > lr;
 	vector<pair<int, int> > rl;
@@ -25,18 +25,15 @@ class Tree
 	int height(node *);
 	int diff(node *);
 	void print(node *, int);
-	void deconstructHelper(node *);
-
+	void destructHelper(node *);
 	void rotationPrintHelper(int, int, node*, int, int);
 	void rangeChecker(vector<pair<int, int> >& , int, int);
-
+	node* balance(node *);
 	node* insert(node *, int); 
 	node *rr_rotate(node *);
 	node *ll_rotate(node *);
 	node *lr_rotate(node *);
 	node *rl_rotate(node *);
-
-	node* balance(node *);
 
 public:
 	Tree(): ll(), lr(), rl(), rr() {
@@ -52,6 +49,7 @@ public:
 	void print();
 	void printRotation();
 	void reset();
+	//getter methods
 	int getVisit();
 	int getRotation();
 	int getInsert();

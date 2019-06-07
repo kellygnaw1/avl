@@ -142,27 +142,22 @@ int main(int argc, char *argv[]){
 					count += 1;
 				}
 				cout << "Found " << args.size() << " of " << count << " nodes: [";
-				// for(int a : args){
-				// 	if(a != args.front()){
-				// 		cout << ", ";
-				// 	}
-				// 	cout << a;
-				// }
 				if(args.size() != 0){
 					for(size_t i = 0; i < args.size()-1; i++){
 						cout << args[i] << ", "; 
 					}
 					cout<<args[args.size()-1];
 				}
-				//cout <<args[args.size()-1];
 				cout << "]\n" << "Visited " << tree.getVisit() << " (" << (1.0*tree.getVisit()) / count << ") nodes and performed " << tree.getRotation() << " (" << (1.0*tree.getRotation())/count << ") rotations." << endl;
 
 			}
 			cout << endl;
 		}
 		testFile.close();
+
 	}else {
 		cout << "cannot open file" << endl;
 	}
+	
 	return 0;
 }
